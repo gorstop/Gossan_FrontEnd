@@ -1,7 +1,8 @@
 import React from 'react';
-import { Form, Icon, Input, Button, message } from 'antd';
-import { API_ROOT } from '../constants';
 import $ from 'jquery';
+import { Form, Icon, Input, Button, message } from 'antd';
+import { Link } from 'react-router-dom';
+import { API_ROOT } from '../constants';
 
 const FormItem = Form.Item;
 
@@ -12,18 +13,18 @@ class NormalLoginForm extends React.Component {
       if (!err) {
         console.log('Received values of form: ', values);
         $.ajax({
-          url:`${API_ROOT}/login`,
+          url: `${API_ROOT}/login`,
           method: 'POST',
           data: JSON.stringify({
             username: values.username,
             password: values.password,
           }),
         }).then((response) => {
-          message.success(response);
+          this.props.handleLogin(response);
         }, (error) => {
           message.error(error.responseText);
-        }).catch(() => {
-          console.log(e);
+        }).catch((error) => {
+          console.log(error);
         });
       }
     });
@@ -50,7 +51,7 @@ class NormalLoginForm extends React.Component {
           <Button type="primary" htmlType="submit" className="login-form-button">
             Log in
           </Button>
-          Or <a href="">register now!</a>
+          Or <Link to="/register">register now!</Link>
         </FormItem>
       </Form>
     );
