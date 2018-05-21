@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs, Button, Spin } from 'antd';
 import $ from 'jquery';
 import {API_ROOT, GEO_OPTIONS, POS_KEY, TOKEN_KEY, AUTH_PREFIX} from '../constants';
+import { Gallery } from './Gallery';
 
 
 const TabPane = Tabs.TabPane;
@@ -12,6 +13,7 @@ export class Home extends React.Component {
     loadingGeoLocation: false,
     loadingPosts: false,
     error: '',
+    posts: [],
   }
 
   componentDidMount() {
@@ -57,7 +59,7 @@ export class Home extends React.Component {
       },
     }).then((response) => {
       console.log(response);
-      this.setState({ loadingPosts : false, error: ''});
+      this.setState({ posts: response, loadingPosts : false, error: ''});
     }, (response) => {
       console.log(response.responseText);
       this.setState({ loadingPosts : false });
@@ -75,6 +77,18 @@ export class Home extends React.Component {
       return <Spin tip="loading geo location..."/>
     } else if (this.state.loadingPosts) {
       return <Spin tip="loading posts..."/>
+    } else if (this.state.posts && this.state.posts.length > 0) {
+      const images = this.state.posts.map((post) => {
+        return {
+          user: post.user,
+          src: post.url,
+          thumbnail: post.url,
+          caption: post.message,
+          thumbnailWidth: 400,
+          thumbnailHeight: 300,
+        }
+      });
+      return <Gallery images={images}/>
     } else {
       return '';
     }
