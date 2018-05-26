@@ -1,5 +1,5 @@
 .main-tabs {
-    padding-left: 80px;
-    padding-right: 80px;
-    margin-top: 40px;
+    min-width: 80%;
+    margin-left: 5%;
+    margin-right: 5%
 }
