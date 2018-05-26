@@ -95,7 +95,7 @@ export class Home extends React.Component {
     }
   }
   render() {
-    const operations = <CreatePostButton/>;
+    const operations = <CreatePostButton loadNearByPosts={this.loadNearByPosts}/>;
 
     return (
       <div className="main-tabs">
