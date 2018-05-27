@@ -4,6 +4,7 @@ import $ from 'jquery';
 import {API_ROOT, GEO_OPTIONS, POS_KEY, TOKEN_KEY, AUTH_PREFIX} from '../constants';
 import { Gallery } from './Gallery';
 import { CreatePostButton } from "./CreatePostButton";
+import { WrappedAroundMap } from "./AroundMap";
 
 
 const TabPane = Tabs.TabPane;
@@ -53,7 +54,7 @@ export class Home extends React.Component {
     this.setState({ loadingPosts : true, error: '' });
     const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
     $.ajax({
-      url: `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20000`,
+      url: `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=200`,
       method: 'GET',
       headers: {
         Authorization: `${AUTH_PREFIX} ${localStorage.getItem(TOKEN_KEY)}`,
@@ -103,7 +104,14 @@ export class Home extends React.Component {
           <TabPane tab="Posts" key="1">
             {this.getGalleryPanelContent()}
             </TabPane>
-          <TabPane tab="Map" key="2">Map</TabPane>
+          <TabPane tab="Map" key="2">
+            <WrappedAroundMap
+              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
+              loadingElement={<div style={{ height: `100%` }} />}
+              containerElement={<div style={{ height: `400px` }} />}
+              mapElement={<div style={{ height: `100%` }} />}
+              />
+          </TabPane>
         </Tabs>
       </div>
     );
