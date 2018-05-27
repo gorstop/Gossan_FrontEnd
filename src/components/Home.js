@@ -36,7 +36,7 @@ export class Home extends React.Component {
   }
 
   onSuccessLoadGeoLocation = (position) => {
-    this.setState({ loadingGeoLocation: true, error: ''});
+    this.setState({ error: ''});
     this.setState({ loadingGeoLocation: false});
     console.log(position);
     const { latitude, longitude} = position.coords;
@@ -110,6 +110,7 @@ export class Home extends React.Component {
               loadingElement={<div style={{ height: `100%` }} />}
               containerElement={<div style={{ height: `400px` }} />}
               mapElement={<div style={{ height: `100%` }} />}
+              posts={this.state.posts}
               />
           </TabPane>
         </Tabs>
