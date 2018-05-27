@@ -50,11 +50,12 @@ export class Home extends React.Component {
     this.setState({ error: 'Failed to load geolocation'});
   }
 
-  loadNearByPosts = (location) => {
+  loadNearByPosts = (location, range) => {
     this.setState({ loadingPosts : true, error: '' });
     const { lat, lon } = location? location : JSON.parse(localStorage.getItem(POS_KEY));
+    const radius = range ? range : 20;
     $.ajax({
-      url: `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20`,
+      url: `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=${radius}`,
       method: 'GET',
       headers: {
         Authorization: `${AUTH_PREFIX} ${localStorage.getItem(TOKEN_KEY)}`,
