@@ -50,9 +50,9 @@ export class Home extends React.Component {
     this.setState({ error: 'Failed to load geolocation'});
   }
 
-  loadNearByPosts = () => {
+  loadNearByPosts = (location) => {
     this.setState({ loadingPosts : true, error: '' });
-    const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
+    const { lat, lon } = location? location : JSON.parse(localStorage.getItem(POS_KEY));
     $.ajax({
       url: `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20`,
       method: 'GET',
@@ -61,7 +61,7 @@ export class Home extends React.Component {
       },
     }).then((response) => {
       console.log(response);
-      this.setState({ posts: response, loadingPosts : false, error: ''});
+      this.setState({ posts: response || [], loadingPosts : false, error: ''});
     }, (response) => {
       console.log(response.responseText);
       this.setState({ loadingPosts : false });
@@ -108,9 +108,10 @@ export class Home extends React.Component {
             <WrappedAroundMap
               googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyC4R6AN7SmujjPUIGKdyao2Kqitzr1kiRg&v=3.exp&libraries=geometry,drawing,places"
               loadingElement={<div style={{ height: `100%` }} />}
-              containerElement={<div style={{ height: `400px` }} />}
+              containerElement={<div style={{ height: `500px` }} />}
               mapElement={<div style={{ height: `100%` }} />}
               posts={this.state.posts}
+              loadNearByPosts={this.loadNearByPosts}
               />
           </TabPane>
         </Tabs>
