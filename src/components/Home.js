@@ -54,7 +54,7 @@ export class Home extends React.Component {
     this.setState({ loadingPosts : true, error: '' });
     const { lat, lon } = JSON.parse(localStorage.getItem(POS_KEY));
     $.ajax({
-      url: `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=200`,
+      url: `${API_ROOT}/search?lat=${lat}&lon=${lon}&range=20`,
       method: 'GET',
       headers: {
         Authorization: `${AUTH_PREFIX} ${localStorage.getItem(TOKEN_KEY)}`,
