@@ -1,5 +1,5 @@
-import React  from 'react';
-import { Header }  from './Header';
+import React from 'react';
+import { Header } from './Header';
 import { Main } from './Main';
 import { TOKEN_KEY } from '../constants';
 
@@ -7,11 +7,11 @@ import '../styles/App.css';
 
 class App extends React.Component {
   state = {
-    isLoggedIn: !!localStorage.getItem(TOKEN_KEY),
+    isLoggedIn: Boolean(localStorage.getItem(TOKEN_KEY)),
   }
 
-  handleLogin = (response) => {
-    localStorage.setItem(TOKEN_KEY, response);
+  handleLogin = (token) => {
+    localStorage.setItem(TOKEN_KEY, token);
     this.setState({ isLoggedIn: true });
   }
 
